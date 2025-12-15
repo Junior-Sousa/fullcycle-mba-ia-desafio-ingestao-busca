@@ -137,6 +137,17 @@ Utilize o Docker Compose fornecido para inicializar o PostgreSQL com `pgVector`:
 docker compose up -d
 ```
 
+Resultado Esperado
+```bash
+fullcycle-mba-ia-desafio-ingestao-busca$ docker compose up -d
+[+] Running 4/4
+ ✔ Network fullcycle-mba-ia-desafio-ingestao-busca_default                   Created                                                                                                                                                    0.1s
+ ✔ Volume fullcycle-mba-ia-desafio-ingestao-busca_postgres_data              Created                                                                                                                                                    0.0s
+ ✔ Container postgres_rag                                                    Healthy                                                                                                                                                   11.6s
+ ✔ Container fullcycle-mba-ia-desafio-ingestao-busca-bootstrap_vector_ext-1  Started
+```
+
+
 ### 3. Executar Ingestão do PDF:
 
 ```bash
@@ -147,4 +158,33 @@ python src/ingest.py
 
 ```bash
 python src/chat.py
+```
+
+---
+
+## 🛠️ Troubleshootings
+
+### 1. The container name "/postgres_rag" is already in use by container
+
+```bash
+ ✘ Container postgres_rag                                        Error response from daemon: Conflict. The container name "/postgres_rag" is already in use by container "d960959a7a24e84a98828cd0c1d8d54b4...                          0.0s
+Error response from daemon: Conflict. The container name "/postgres_rag" is already in use by container "d960959a7a24e84a98828cd0c1d8d54b443482a899cb296a4d25b7713e826c12". You have to remove (or rename) that container to be able to reuse that name.
+```
+
+Este erro ocorre porque o Docker não consegue criar um novo container com o nome postgres_rag, pois já existe um container (parado ou em execução) utilizando esse nome.
+
+Para resolver, você deve remover o container antigo antes de tentar inicializar um novo.
+
+**Remova o container existente com o nome em conflito:**
+
+```bash
+docker rm postgres_rag
+```
+
+*Dica:* Se o container estiver em execução, use a flag -f para forçar a remoção: docker rm -f postgres_rag
+
+**Tente executar sua aplicação Docker novamente (por exemplo, usando docker-compose):**
+
+```bash
+docker-compose up -d
 ```
