@@ -151,7 +151,7 @@ Utilize o Docker Compose fornecido para inicializar o PostgreSQL com `pgVector`:
 docker compose up -d
 ```
 
-Resultado Esperado
+#### Resultado Esperado
 ```bash
 fullcycle-mba-ia-desafio-ingestao-busca$ docker compose up -d
 [+] Running 4/4
@@ -161,6 +161,32 @@ fullcycle-mba-ia-desafio-ingestao-busca$ docker compose up -d
  ✔ Container fullcycle-mba-ia-desafio-ingestao-busca-bootstrap_vector_ext-1  Started
 ```
 
+#### Banco de Dados
+
+```bash
+(venv) fullcycle-mba-ia-desafio-ingestao-busca$ docker ps
+CONTAINER ID   IMAGE                    COMMAND                  CREATED        STATUS                  PORTS                                         NAMES
+a9994da3a871   pgvector/pgvector:pg17   "docker-entrypoint.s…"   18 hours ago   Up 18 hours (healthy)   0.0.0.0:5432->5432/tcp, [::]:5432->5432/tcp   postgres_rag
+
+(venv) fullcycle-mba-ia-desafio-ingestao-busca$ docker exec -it postgres_rag psql -U postgres
+psql (17.6 (Debian 17.6-1.pgdg12+1))
+Type "help" for help.
+
+postgres=# \l
+                                                    List of databases
+   Name    |  Owner   | Encoding | Locale Provider |  Collate   |   Ctype    | Locale | ICU Rules |   Access privileges   
+-----------+----------+----------+-----------------+------------+------------+--------+-----------+-----------------------
+ postgres  | postgres | UTF8     | libc            | en_US.utf8 | en_US.utf8 |        |           | 
+ rag       | postgres | UTF8     | libc            | en_US.utf8 | en_US.utf8 |        |           | 
+ template0 | postgres | UTF8     | libc            | en_US.utf8 | en_US.utf8 |        |           | =c/postgres          +
+           |          |          |                 |            |            |        |           | postgres=CTc/postgres
+ template1 | postgres | UTF8     | libc            | en_US.utf8 | en_US.utf8 |        |           | =c/postgres          +
+           |          |          |                 |            |            |        |           | postgres=CTc/postgres
+(4 rows)
+
+postgres=#
+
+```
 
 ### 3. Executar Ingestão do PDF:
 
