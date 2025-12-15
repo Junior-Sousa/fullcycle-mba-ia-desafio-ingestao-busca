@@ -105,6 +105,17 @@ As chaves de API devem ser configuradas em um arquivo `.env` (baseado no `.env.e
 └── README.md             # Instruções de execução
 ```
 
+---
+
+## 🛠️ Pré-requisitos
+
+Para executar este projeto, você precisará ter o seguinte software instalado em seu ambiente:
+
+* **Python 3.8+:** Necessário para rodar os scripts (`python` ou `python3`).
+* **Docker e Docker Compose:** Essencial para subir o banco de dados PostgreSQL com a extensão `pgVector`.
+
+---
+
 ## 🚀 Ordem de Execução
 
 ### 1. Configurar Ambiente Virtual e Dependências
@@ -118,12 +129,22 @@ Esta etapa garante que o projeto utilize as versões corretas de Python e das bi
 | **Instalação** | Instalar todas as dependências do `requirements.txt`. | `pip install -r requirements.txt` | `pip install -r requirements.txt` |
 
 
-2.  **Subir o Banco de Dados:** `docker compose up -d`
+### 2. Subir o Banco de Dados
 
 Utilize o Docker Compose fornecido para inicializar o PostgreSQL com `pgVector`:
 
 ```bash
 docker compose up -d
+```
 
-3.  **Executar Ingestão do PDF:** `python src/ingest.py`
-4.  **Rodar o Chat:** `python src/chat.py`
+### 3. Executar Ingestão do PDF:
+
+```bash
+python src/ingest.py
+```
+
+### 4. Rodar o Chat
+
+```bash
+python src/chat.py
+```
