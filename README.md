@@ -128,6 +128,20 @@ Esta etapa garante que o projeto utilize as versões corretas de Python e das bi
 | **Ativação** | Ativar o ambiente virtual. | `source venv/bin/activate` | `.\venv\Scripts\activate` |
 | **Instalação** | Instalar todas as dependências do `requirements.txt`. | `pip install -r requirements.txt` | `pip install -r requirements.txt` |
 
+#### O procedimento abaixo pode demorar alguns minutos ...
+
+```bash
+fullcycle-mba-ia-desafio-ingestao-busca$ 
+fullcycle-mba-ia-desafio-ingestao-busca$ python -m venv venv
+fullcycle-mba-ia-desafio-ingestao-busca$ source venv/bin/activate
+(venv) fullcycle-mba-ia-desafio-ingestao-busca$ pip install -r requirements.txt 
+Collecting aiohappyeyeballs==2.6.1 (from -r requirements.txt (line 1))
+  Using cached aiohappyeyeballs-2.6.1-py3-none-any.whl.metadata (5.9 kB)
+
+Installing collected packages: filetype, zstandard, urllib3, typing_extensions, tqdm, tenacity, sniffio, regex, PyYAML, python-dotenv, pypdf, pyasn1, psycopg2-binary, psycopg-binary, protobuf, propcache, packaging, orjson, numpy, mypy_extensions, multidict, jsonpointer, jiter, idna, httpx-sse, h11, grpcio, greenlet, frozenlist, distro, charset-normalizer, certifi, cachetools, attrs, asyncpg, annotated-types, aiohappyeyeballs, yarl, typing-inspection, typing-inspect, SQLAlchemy, rsa, requests, pydantic_core, pyasn1_modules, psycopg-pool, psycopg, proto-plus, pgvector, marshmallow, jsonpatch, httpcore, googleapis-common-protos, anyio, aiosignal, tiktoken, requests-toolbelt, pydantic, httpx, grpcio-status, google-auth, dataclasses-json, aiohttp, pydantic-settings, openai, langsmith, google-api-core, langchain-core, langchain-text-splitters, langchain-postgres, langchain-openai, google-ai-generativelanguage, langchain-google-genai, langchain, langchain-community
+
+```
+
 
 ### 2. Subir o Banco de Dados
 
