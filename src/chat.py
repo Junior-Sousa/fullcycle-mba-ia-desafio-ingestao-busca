@@ -12,11 +12,11 @@ def main():
         print("Could not start the chat. Check the initialization errors above.")
         return
     
-    print("\n" + "="*70)
+    print("\n" + "="*80)
     print("MBA IA FullCycle - Semantic Ingestion and Search with LangChain and Postgres")
     print("Rules: Answers ONLY based on the PDF provided during ingestion.")
     print("Type 'sair' or 'exit' to quit.")
-    print("="*70 + "\n")
+    print("="*80 + "\n")
 
     # Main chat loop
     while True:

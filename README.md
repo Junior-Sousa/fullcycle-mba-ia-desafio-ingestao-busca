@@ -200,6 +200,32 @@ Successfully ingested 67 documents.
 
 ```bash
 python src/chat.py
+Search module successfully initialized.
+
+================================================================================
+MBA IA FullCycle - Semantic Ingestion and Search with LangChain and Postgres
+Rules: Answers ONLY based on the PDF provided during ingestion.
+Type 'sair' or 'exit' to quit.
+================================================================================
+
+QUESTION: Qual faturamento e ano de fundacao de Solar Telecom EPP ?
+SEARCHING...
+
+ANSWER: Faturamento: R$ 59.784.446,92
+Ano de fundação: 1985
+
+QUESTION: Qual o faturamento da empresa SuperTechIABrazil ?
+SEARCHING...
+
+ANSWER: O faturamento da empresa SuperTechIABrazil é R$ 10.000.000,00.
+
+QUESTION: Quantos clientes temos 2024 ?
+SEARCHING...
+
+ANSWER: Não tenho informações necessárias para responder sua pergunta.
+
+QUESTION: sair
+Closing the chat. Goodbye!
 ```
 
 ---
