@@ -84,8 +84,8 @@ RESPONDA A "PERGUNTA DO USUÁRIO"
 
 ### Gemini (Google)
 
-* **Modelo de Embeddings:** `models/embedding-001`
-* **Modelo de LLM para Resposta:** `gemini-2.5-flash-lite`
+* **Modelo de Embeddings:** `gemini-embedding-001`
+* **Modelo de LLM para Resposta:** `gemini-2.5-flash`
 
 As chaves de API devem ser configuradas em um arquivo `.env` (baseado no `.env.example`).
 
@@ -111,7 +111,7 @@ As chaves de API devem ser configuradas em um arquivo `.env` (baseado no `.env.e
 
 Para executar este projeto, você precisará ter o seguinte software instalado em seu ambiente:
 
-* **Python 3.8+:** Necessário para rodar os scripts (`python` ou `python3`).
+* **Python 3.12+:** Necessário para rodar os scripts (`python` ou `python3`).
 * **Docker e Docker Compose:** Essencial para subir o banco de dados PostgreSQL com a extensão `pgVector`.
 
 ---

@@ -50,7 +50,7 @@ def main():
 
 if __name__ == "__main__":
     # Ensures the script is running in the terminal context.
-    if sys.version_info < (3, 9):
-        print("This script requires Python 3.9 or higher.")
+    if sys.version_info < (3, 12):
+        print("This script requires Python 3.12 or higher.")
     else:
         main()
