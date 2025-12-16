@@ -192,6 +192,8 @@ postgres=#
 
 ```bash
 python src/ingest.py
+Starting PDF ingestion process...
+Successfully ingested 67 documents.
 ```
 
 ### 4. Rodar o Chat
