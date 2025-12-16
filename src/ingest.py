@@ -10,13 +10,15 @@ from langchain_google_genai import GoogleGenerativeAIEmbeddings
 from langchain_postgres import PGVector
 
 # -----------------------------------------------------
-# PDF Ingestion Service
+# Service responsible for ingestion of PDFs into a vector store (PGVector).
 # -----------------------------------------------------
-class PdfIngestionService:
+
+class PDFIngestionService:
     """
-    Service responsible for idempotent ingestion of PDFs into a vector store (PGVector).
+    Service responsible for ingesting PDFs into a PGVector store.
     """
 
+    # Class variable
     REQUIRED_ENV_VARS = (
         "GOOGLE_API_KEY",
         "GOOGLE_EMBEDDING_MODEL",
@@ -25,25 +27,27 @@ class PdfIngestionService:
         "PDF_PATH",
     )
 
+    # Instance initializer (Constructor)
     def __init__(self):
         load_dotenv()
-        self._validate_env()
+        self._validate_env() 
 
         self.pdf_path = os.getenv("PDF_PATH")
         self.vector_store = self._create_vector_store()
 
     # -----------------------------------------------------
-    # Validate environment variables
+    # Validate environment variables (Instance method)
     # -----------------------------------------------------
     def _validate_env(self) -> None:
-        missing = [var for var in self.REQUIRED_ENV_VARS if not os.getenv(var)]
+        # Accessing class variable via self.
+        missing = [var for var in self.REQUIRED_ENV_VARS if not os.getenv(var)] 
         if missing:
             raise RuntimeError(
                 f"Missing required environment variables: {', '.join(missing)}"
             )
 
     # -----------------------------------------------------
-    # Initialize vector store
+    # Initialize vector store (Instance method)
     # -----------------------------------------------------
     def _create_vector_store(self) -> PGVector:
         embeddings = GoogleGenerativeAIEmbeddings(
@@ -58,7 +62,7 @@ class PdfIngestionService:
         )
 
     # -----------------------------------------------------
-    # Generate deterministic document ID for idempotency
+    # Generate deterministic document ID (Static method)
     # -----------------------------------------------------
     @staticmethod
     def _generate_document_id(document: Document) -> str:
@@ -69,14 +73,15 @@ class PdfIngestionService:
         return f"doc-{digest}"
 
     # -----------------------------------------------------
-    # Load PDF documents
+    # Load PDF documents (Instance method)
     # -----------------------------------------------------
     def _load_pdf(self) -> List[Document]:
-        documents = PyPDFLoader(self.pdf_path).load()
+        # Uses instance attribute self.pdf_path
+        documents = PyPDFLoader(self.pdf_path).load() 
         return documents
 
     # -----------------------------------------------------
-    # Split documents into chunks
+    # Split documents into chunks (Instance method)
     # -----------------------------------------------------
     def _split_documents(self, documents: List[Document]) -> List[Document]:
         splitter = RecursiveCharacterTextSplitter(
@@ -87,16 +92,18 @@ class PdfIngestionService:
         return chunks
 
     # -----------------------------------------------------
-    # Enrich documents with IDs
+    # Enrich documents with IDs (Instance method)
     # -----------------------------------------------------
     def _enrich_documents(self, documents: List[Document]) -> List[Document]:
         enriched: List[Document] = []
         for doc in documents:
-            doc_id = self._generate_document_id(doc)
+            # Calls the static method
+            doc_id = self._generate_document_id(doc) 
             enriched.append(
                 Document(
                     page_content=doc.page_content,
                     metadata={
+                        # Filtering empty/None metadata values
                         **{k: v for k, v in doc.metadata.items() if v not in ("", None)},
                         "document_id": doc_id,
                     },
@@ -105,29 +112,45 @@ class PdfIngestionService:
         return enriched
 
     # -----------------------------------------------------
-    # Run ingestion process
+    # Run ingestion process (Public instance method)
     # -----------------------------------------------------
-    def run(self) -> None:
+    def ingest_pdf(self) -> None:
         try:
+            print("Starting PDF ingestion process...")
             documents = self._load_pdf()
             chunks = self._split_documents(documents)
 
             if not chunks:
+                print("No chunks generated. Exiting.")
                 return
 
             enriched_docs = self._enrich_documents(chunks)
             ids = [doc.metadata["document_id"] for doc in enriched_docs]
 
+            # Uses instance attribute self.vector_store
             self.vector_store.add_documents(
                 documents=enriched_docs,
                 ids=ids,
             )
+            print(f"Successfully ingested {len(ids)} documents.")
 
         except Exception as exc:
+            print(f"Error during ingestion: {exc}")
             raise
 
 # -----------------------------------------------------
 # Entry point
 # -----------------------------------------------------
 if __name__ == "__main__":
-    PdfIngestionService().run()
+    try:
+        # 1. Create an instance of the class (runs __init__ and validation)
+        ingestion_service = PDFIngestionService()
+        
+        # 2. Call the ingestion method on the instance
+        ingestion_service.ingest_pdf()
+        
+    except RuntimeError as e:
+        # Handles missing environment variables gracefully
+        print(f"Configuration Error: {e}")
+    except Exception as e:
+        print(f"An unexpected error occurred: {e}")
